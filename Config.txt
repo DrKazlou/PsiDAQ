@@ -1,0 +1,56 @@
+@N957
+port 				1						#v1718_[N] in /dev/usb 
+Threshold 			16						#low level detect threshold [0:99] limit 0:500 mV
+BLDIM				32768					#Block Dim register number of word to read
+ControlMode			AUTO					# AUTO | EXT_GATE
+											#EXT_GATE: track on external trigger rising edge
+											#	hold on external trigger falling edge
+											# AUTO    : track on signal level 
+											#	hold on signal peak detect
+@N957
+##################################
+##################################
+@DT5770
+
+IP 					134.176.17.127
+#IP 				192.168.0.98			#default
+
+@DT5770
+##################################
+##################################
+@DT5720
+port 				1						#v1718_[N] in /dev/usb 
+RecordLength 		100  					#1 bin = 4 ns; 100 = 400 ns 
+PostTrigger 		50     					#value in % of recordlength
+NumEvents 			1        				#Max. number of events for a block transfer (0 to 1023)
+FPIOtype 			NIM       				#NIM or TTL for input signals
+ExtTriggerMode 		ACQ_ONLY   				#DISABLED | EXTOUT_ONLY | ACQ_ONLY | ACQ_AND_EXTOUT
+
+ChannelTriggerMode	ACQ_ONLY ACQ_ONLY		#for both channels DISABLED | EXTOUT_ONLY | ACQ_ONLY | ACQ_AND_EXTOUT
+
+Polarity  			NEGATIVE 				#NEGATIVE | POSITIVE 
+
+DCOffset  			530 503    				#0-65536?
+Threshold 			203 230    				#thresholds for both channels
+
+@DT5720
+##################################
+##################################
+@V1730
+
+#PID              15103
+PID               58425
+
+N_BOARDS           1
+
+N_CH               4
+RecordLength       400 200 
+#Polarity          NEGATIVE
+Polarity           POSITIVE
+
+DCOffset           20000
+Threshold          800
+InputRange         0_5						#0.5 or 2.0 Vpp	
+
+@V1730
+##################################
