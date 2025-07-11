@@ -1583,19 +1583,20 @@ void WindowMain::AcquisitionThread() {
         if (hasData) {
 			auto start = std::chrono::high_resolution_clock::now();
 			{
-            	std::lock_guard<std::mutex> lock(fAnalysisQueueMutex);
-				
-				//std::vector<ProcessedEvent> combinedEvts;
-                //for (int i = 0; i < ((fDeviceType == DeviceType::V1730) ? Vcfg[0].NB : 1); ++i) {
-                //    if (!Evts[i].empty()) {
-                //        combinedEvts.insert(combinedEvts.end(), Evts[i].begin(), Evts[i].end());
-                //    }
-                //}
-				//fAnalysisQueue.push(combinedEvts);
-				fAnalysisQueue.push(Evts[0]);
-				if (fDeviceType == DeviceType::V1730 && Vcfg[0].NB==2)
-					fAnalysisQueue.push(Evts[1]);
-		        fAnalysisQueueCond.notify_one();
+            			std::lock_guard<std::mutex> lock(fAnalysisQueueMutex);
+				if (fDeviceType == DeviceType::V1730 && Vcfg[0].NB==2){
+					std::vector<ProcessedEvent> combinedEvts;
+                			for (int i = 0; i < ((fDeviceType == DeviceType::V1730) ? Vcfg[0].NB : 1); ++i) {
+                	    			if (!Evts[i].empty()) {
+                    	    				combinedEvts.insert(combinedEvts.end(), Evts[i].begin(), Evts[i].end());
+                    				}
+                			}
+					fAnalysisQueue.push(combinedEvts);
+				}
+				else
+					fAnalysisQueue.push(Evts[0]);
+		
+		        	fAnalysisQueueCond.notify_one();
 				if (IsDebugEnabled()) printf("AcquisitionThread: Data in queue Evts[0][0].trace[13] : %0.2f\n", Evts[0][0].trace[13]);
 			}
 			auto end = std::chrono::high_resolution_clock::now();
