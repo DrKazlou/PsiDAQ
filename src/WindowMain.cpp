@@ -1224,7 +1224,7 @@ void WindowMain::DoCheckBox() {
 	
 	 //Timer checkbox
 	if (id == 66 ) 
-	   fNEMain[3]->SetState( fCTimer->GetState() == kButtonDown ? kTRUE : kFALSE );
+	   fNEMain[4]->SetState( fCTimer->GetState() == kButtonDown ? kTRUE : kFALSE );
 			
 	if (ret){
 		new TGMsgBox(gClient->GetRoot(), fMain, "Error", Form("Can't handle CheckBoxies \n ret = %i", ret), kMBIconStop, kMBOk);
